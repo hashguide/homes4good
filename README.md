@@ -1,115 +1,209 @@
-# Homes for Good
+# Homes for Hope
 
-Student civics project site built with Vite + React + TypeScript + Tailwind + Supabase.
+Homes for Hope is a student-led civics project website created for a school assignment at Consentino Middle School in Haverhill, Massachusetts.
 
-Main features:
-- CTA to official Change.org petition (opens in new tab)
-- Tracks CTA clicks in Supabase and displays a public count
-- Hidden `/analytics` admin route protected by a password stored in env
+The website encourages community members to support a Change.org petition asking local and Massachusetts leaders to expand homelessness outreach, affordable housing support, mental health services, and job programs.
 
-Environment variables (create a `.env` file in project root):
+## Project Goals
 
-- `VITE_SUPABASE_URL` — your Supabase project URL (used in browser client)
-- `VITE_SUPABASE_ANON_KEY` — your Supabase anon/public key (used in browser client)
+- Raise awareness about homelessness and community impact
+- Encourage visitors to support the petition
+- Display how many people clicked to sign
+- Provide a clean, modern, and trustworthy experience
+- Track simple anonymous analytics with Supabase
 
-# Admin credentials
-- `ADMIN_USERNAME` and `ADMIN_PASSWORD` — preferred non-VITE admin credentials used for initial Supabase setup and for protecting the `/analytics` route.
-- (Optional) `VITE_ADMIN_USERNAME` and `VITE_ADMIN_PASSWORD` — client-side fallbacks for local/dev access to `/analytics` if you want to allow login from the browser. For security in production, rely on `ADMIN_*` server-side values.
+## Tech Stack
 
-Example:
+- Vite
+- React
+- TypeScript
+- Tailwind CSS
+- Supabase
 
-```
-VITE_SUPABASE_URL=https://xyzcompany.supabase.co
-VITE_SUPABASE_ANON_KEY=public-anon-key
+## Main Features
 
-ADMIN_USERNAME=jakeisadmin
-ADMIN_PASSWORD=replace-with-strong-secret
+- Modern one-page landing page
+- CTA linking to the official Change.org petition
+- Public support counter:
+  - “X people clicked to sign”
+- Privacy-conscious analytics
+- Hidden `/analytics` admin dashboard
+- Responsive design for desktop and mobile
 
-# Optional client-side fallbacks (for dev only)
-VITE_ADMIN_USERNAME=jakeisadmin
-VITE_ADMIN_PASSWORD=replace-with-strong-secret
-```
+## Official Petition
 
-Run locally:
+`https://c.org/ym4q6sfGGS`
 
-```bash
-npm install
-npm run dev
-```
+## Project Structure
 
-Supabase setup: run `SUPABASE_SETUP.sql` in your Supabase SQL editor to create tables and RPC.
-# React + TypeScript + Vite
+    homes_for_good/
+      src/
+        components/
+        pages/
+        lib/
+        assets/
+      public/
+      api/
+      SUPABASE_SETUP.sql
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+## Local Development
 
-Currently, two official plugins are available:
+Install dependencies:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+    npm install
 
-## React Compiler
+Start development server:
 
-The React Compiler is enabled on this template. See [this documentation](https://react.dev/learn/react-compiler) for more information.
+    npm run dev
 
-Note: This will impact Vite dev & build performances.
+Build production version:
 
-## Expanding the ESLint configuration
+    npm run build
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+Run linting:
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+    npm run lint
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+Preview production build locally:
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+    npm run preview
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Environment Variables
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+Create a `.env` file in the project root.
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+Frontend variables:
+
+    VITE_SUPABASE_URL=
+    VITE_SUPABASE_ANON_KEY=
+
+Server-only variables:
+
+    ADMIN_USERNAME=
+    ADMIN_PASSWORD=
+    ADMIN_SESSION_SECRET=
+    SUPABASE_SERVICE_ROLE_KEY=
+
+Important:
+
+- Never expose `SUPABASE_SERVICE_ROLE_KEY` to frontend code.
+- Never use `VITE_ADMIN_USERNAME` or `VITE_ADMIN_PASSWORD`.
+- Any variable prefixed with `VITE_` becomes public in the browser bundle.
+
+## Supabase Setup
+
+1. Create a new Supabase project.
+2. Open the SQL Editor.
+3. Run:
+
+    SUPABASE_SETUP.sql
+
+This creates:
+
+- `analytics_events`
+- `public_stats`
+- row-level security policies
+- analytics helper functions
+
+## Analytics
+
+The app tracks:
+
+- `page_view`
+- `petition_cta_click`
+- `learn_more_click`
+
+The public website displays:
+
+    X people clicked to sign
+
+This metric represents CTA clicks from the website, not confirmed Change.org signatures.
+
+## Privacy
+
+The site does NOT collect:
+
+- Names
+- Emails
+- Addresses
+- Phone numbers
+- Petition signatures
+- Anything typed into Change.org
+
+Tracked analytics data includes:
+
+- Page path
+- Referrer
+- Device type
+- Anonymous session ID
+- Browser user agent
+
+## Admin Dashboard
+
+Hidden route:
+
+    /analytics
+
+The dashboard is not linked publicly.
+
+Admin authentication should be handled through backend/serverless API routes.
+
+Recommended API routes:
+
+    /api/admin/login
+    /api/admin/logout
+    /api/admin/me
+    /api/admin/analytics/summary
+    /api/admin/analytics/events
+
+## Deployment
+
+Recommended hosting:
+
+- Vercel (frontend + serverless API routes)
+- Supabase (database and analytics)
+
+### Vercel Setup
+
+1. Push repository to GitHub
+2. Import project into Vercel
+3. Set root directory:
+
+    homes_for_good
+
+4. Add environment variables in Vercel project settings
+5. Deploy
+
+## Design Goals
+
+The site should feel:
+
+- Hopeful
+- Modern
+- Civic-minded
+- Clean
+- Trustworthy
+
+Avoid:
+
+- Fake signature counts
+- Political attacks
+- Heavy animations
+- Guilt-heavy messaging
+- Dark or depressing visuals
+
+## Accessibility
+
+The site should use:
+
+- Semantic HTML
+- Keyboard-accessible interactions
+- Accessible contrast
+- Responsive layouts
+- Proper heading hierarchy
+
+## Author
+
+Jake Arsenault  
+Consentino Middle School  
+Haverhill, Massachusetts
