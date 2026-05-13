@@ -19,7 +19,7 @@ function getSessionId() {
     try {
         let id = localStorage.getItem('hfg_session_id')
         if (!id) {
-            id = (crypto && (crypto as any).randomUUID ? (crypto as any).randomUUID() : 's_' + Math.random().toString(36).slice(2))
+            id = 's_' + Math.random().toString(36).slice(2)
             localStorage.setItem('hfg_session_id', id)
         }
         return id
