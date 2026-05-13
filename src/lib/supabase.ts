@@ -6,7 +6,9 @@ const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || ''
 let supabase: SupabaseClient | null = null
 
 if (SUPABASE_URL && SUPABASE_ANON_KEY) {
-    supabase = createClient(SUPABASE_URL, SUPABASE_ANON_KEY)
+    // Type assertion: import.meta.env values may be typed as string | null in some toolchains.
+    // We already guard for truthiness above, so assert to `string` to satisfy TS.
+    supabase = createClient(SUPABASE_URL as string, SUPABASE_ANON_KEY as string)
 }
 
 export function getSupabase() {
